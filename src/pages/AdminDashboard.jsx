@@ -26,9 +26,9 @@ function AdminDashboard() {
     const fetchData = async () => {
         try {
             const [users, edu, grp] = await Promise.all([
-                axios.get('http://127.0.0.1:8000/api/admin/users', { headers }),
-                axios.get('http://127.0.0.1:8000/api/courses', { headers }),
-                axios.get('http://127.0.0.1:8000/api/groups', { headers })
+                axios.get('https://smarteduproject.fwh.is/api/admin/users', { headers }),
+                axios.get('https://smarteduproject.fwh.is/api/courses', { headers }),
+                axios.get('https://smarteduproject.fwh.is/api/groups', { headers })
             ]);
             
             // Agar ma'lumot kelmasa, nima kelayotganini ko'rish uchun alert ishlatamiz
@@ -50,7 +50,7 @@ function AdminDashboard() {
     const handleCreateUser = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://127.0.0.1:8000/api/admin/create-user', newUser, { headers });
+            await axios.post('https://smarteduproject.fwh.is/api/admin/create-user', newUser, { headers });
             alert("Foydalanuvchi muvaffaqiyatli yaratildi!");
             setNewUser({ name: '', username: '', password: '', role: 'student' });
             fetchData(); 
@@ -70,7 +70,7 @@ function AdminDashboard() {
         }
 
         try {
-            await axios.post('http://127.0.0.1:8000/api/admin/reset-password', {
+            await axios.post('https://smarteduproject.fwh.is/api/admin/reset-password', {
                 id: id,
                 role: role,
                 new_password: newPassword
@@ -87,7 +87,7 @@ function AdminDashboard() {
         if (!confirm(`Rostdan ham "${name}" profilini o'chirmoqchimisiz?`)) return;
 
         try {
-            await axios.delete(`http://127.0.0.1:8000/api/admin/users/${role}/${id}`, { headers });
+            await axios.delete(`https://smarteduproject.fwh.is/api/admin/users/${role}/${id}`, { headers });
             alert("Foydalanuvchi muvaffaqiyatli o'chirildi!");
             fetchData(); 
         } catch (error) {
@@ -98,7 +98,7 @@ function AdminDashboard() {
     const handleCreateCourse = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://127.0.0.1:8000/api/admin/courses', newCourse, { headers });
+            await axios.post('https://smarteduproject.fwh.is/api/admin/courses', newCourse, { headers });
             alert("Kurs muvaffaqiyatli qo'shildi!");
             setNewCourse({ name: '', price: '', description: '' });
             fetchData();
@@ -110,7 +110,7 @@ function AdminDashboard() {
     const handleCreateGroup = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://127.0.0.1:8000/api/admin/groups', newGroup, { headers });
+            await axios.post('https://smarteduproject.fwh.is/api/admin/groups', newGroup, { headers });
             alert("Guruh muvaffaqiyatli yaratildi!");
             setNewGroup({ name: '', course_id: '', teacher_id: '', days: '', start_time: '' });
             fetchData();

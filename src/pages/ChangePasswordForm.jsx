@@ -13,7 +13,7 @@ function ChangePasswordForm() {
         const token = localStorage.getItem('token');
         
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/user/change-password', 
+            const response = await axios.post('https://smarteduproject.fwh.is/api/user/change-password', 
             { old_password: oldPassword, new_password: newPassword },
             { headers: { Authorization: `Bearer ${token}` } });
 
