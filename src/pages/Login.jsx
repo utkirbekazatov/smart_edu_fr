@@ -22,10 +22,9 @@ function Login() {
         setMessage('Tekshirilmoqda...');
 
         try {
-            // 1. CSRF Cookie olish
-            await api.get('sanctum/csrf-cookie');
-
-            // 2. Login so'rovi (api.js orqali)
+            // DIQQAT: csrf-cookie so'rovini butunlay olib tashladik.
+            // To'g'ridan-to'g'ri backend'ga login ma'lumotlarini yuboramiz:
+            
             const response = await api.post('api/login', {
                 username,
                 password,
@@ -47,7 +46,6 @@ function Login() {
             
         } catch (error) {
             setIsSuccess(false);
-            // Xatolikni aniq ko'rsatish
             setMessage(error.response?.data?.message || 'Server bilan aloqa uzildi!');
             console.error("Login xatosi:", error);
         } finally {
