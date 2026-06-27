@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from './api'; // api.js faylingizdan import qilamiz
+import api from '../api'; // api.js faylingizdan import qilamiz
 import { GraduationCap, User, Lock, ArrowLeft, ShieldCheck, UserCheck, Briefcase, Loader2 } from 'lucide-react';
 
 function Login() {
