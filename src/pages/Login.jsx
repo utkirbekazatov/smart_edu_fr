@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from './api'; // api.js faylingizdan import qilamiz
 import { GraduationCap, User, Lock, ArrowLeft, ShieldCheck, UserCheck, Briefcase, Loader2 } from 'lucide-react';
 
 function Login() {
@@ -18,18 +18,22 @@ function Login() {
         if (e && e.preventDefault) e.preventDefault();
         if (isLoading) return;
 
-        setMessage('Tekshirilmoqda...');
         setIsLoading(true);
+        setMessage('Tekshirilmoqda...');
 
         try {
-            const response = await axios.post('https://smarteduproject.fwh.is/api/login', {
+            // 1. CSRF Cookie olish
+            await api.get('sanctum/csrf-cookie');
+
+            // 2. Login so'rovi (api.js orqali)
+            const response = await api.post('api/login', {
                 username,
                 password,
                 role
             });
             
             setIsSuccess(true);
-            setMessage(`Muvaffaqiyatli kirdingiz! Yo‘naltirilmoqda...`);
+            setMessage("Muvaffaqiyatli kirdingiz!");
             
             // Token va Rolni saqlash
             localStorage.setItem('token', response.data.token);
@@ -43,7 +47,9 @@ function Login() {
             
         } catch (error) {
             setIsSuccess(false);
+            // Xatolikni aniq ko'rsatish
             setMessage(error.response?.data?.message || 'Server bilan aloqa uzildi!');
+            console.error("Login xatosi:", error);
         } finally {
             setIsLoading(false);
         }
@@ -89,11 +95,11 @@ function Login() {
 
                 <form onSubmit={handleLogin}>
                     <div style={{ position: 'relative', marginBottom: '15px' }}>
-                        <User className="input-icon" size={18} style={{ position: 'absolute', left: '15px', top: '15px', color: '#4B5563' }} />
+                        <User size={18} style={{ position: 'absolute', left: '15px', top: '15px', color: '#4B5563' }} />
                         <input className="input-field" placeholder="Login" value={username} onChange={(e) => setUsername(e.target.value)} required />
                     </div>
                     <div style={{ position: 'relative', marginBottom: '25px' }}>
-                        <Lock className="input-icon" size={18} style={{ position: 'absolute', left: '15px', top: '15px', color: '#4B5563' }} />
+                        <Lock size={18} style={{ position: 'absolute', left: '15px', top: '15px', color: '#4B5563' }} />
                         <input className="input-field" type="password" placeholder="Parol" value={password} onChange={(e) => setPassword(e.target.value)} required />
                     </div>
                     <button type="submit" disabled={isLoading} style={{ width: '100%', padding: '14px', background: '#0076B6', color: 'white', border: 'none', borderRadius: '8px', fontWeight: 'bold', cursor: isLoading ? 'not-allowed' : 'pointer' }}>
