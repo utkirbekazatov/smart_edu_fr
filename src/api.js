@@ -1,11 +1,11 @@
-import axios from 'axios';
+import axios from "axios";
 
 const api = axios.create({
-    baseURL: 'https://smarteduproject.fwh.is/',
-    withCredentials: true, // Buni albatta qaytaring
+    baseURL: "https://smarteduproject.fwh.is/api/",
+    withCredentials: false,
     headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json",
     },
 });
 

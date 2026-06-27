@@ -25,7 +25,7 @@ function Login() {
             // DIQQAT: csrf-cookie so'rovini butunlay olib tashladik.
             // To'g'ridan-to'g'ri backend'ga login ma'lumotlarini yuboramiz:
             
-            const response = await api.post('api/login', {
+            const response = await api.post('login', {
                 username,
                 password,
                 role
